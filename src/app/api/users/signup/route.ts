@@ -6,11 +6,13 @@ import { sendEmail } from "@/utils/mailer";
 
 connectDB();
 
-export const POST = async (request: NextRequest) => {
+export const POST= async (request: NextRequest) => {
   try {
     const reqBody = await request.json();
 
     const { email, userName, password } = reqBody;
+
+    console.log(reqBody)
 
     const user = await User.findOne({ email });
 
