@@ -6,22 +6,23 @@ import { sendEmail } from "@/utils/mailer";
 
 connectDB();
 
-export const POST= async (request: NextRequest) => {
+export const POST = async (request: NextRequest) => {
   try {
     const reqBody = await request.json();
 
     const { email, userName, password } = reqBody;
 
-    console.log(reqBody)
-
     const user = await User.findOne({ email });
 
     if (user)
-      return NextResponse.json({ error: "User already exist", status: 400 });
+      return NextResponse.json(
+        { error: "User already exist" },
+        { status: 400 }
+      );
 
     const salt = await bcrypt.genSalt(10);
 
-    const hashPassword = bcrypt.hash(password, salt);
+    const hashPassword = await bcrypt.hash(password, salt);
 
     const newUser = await User.create({
       email,
@@ -33,12 +34,19 @@ export const POST= async (request: NextRequest) => {
 
     await sendEmail({ email, emailType: "Varify", userId: newUser._id });
 
-    return NextResponse.json({
-      message: "User registerd successfully",
-      success: true,
-      newUser,
-    });
+    const newUserData = await User.findById(newUser._id).select(
+      "password forgetPasswordTokenExpiry forgetPasswordToken"
+    );
+
+    return NextResponse.json(
+      {
+        message: "User registerd successfully",
+        success: true,
+        newUserData,
+      },
+      { status: 200 }
+    );
   } catch (error: any) {
-    return NextResponse.json({ error, status: 500 });
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 };
