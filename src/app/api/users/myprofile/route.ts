@@ -10,7 +10,7 @@ export const POST = async (request: NextRequest) => {
     const userId = await getValuesFromToken(request);
 
     const user = await User.findById(userId).select(
-      "password forgetPasswordToken forgetPasswordTokenExpiry"
+      "-password"
     );
 
     if (!user)
@@ -20,7 +20,7 @@ export const POST = async (request: NextRequest) => {
       {
         message: "user found",
         success: true,
-        user,
+        user
       },
       { status: 200 }
     );

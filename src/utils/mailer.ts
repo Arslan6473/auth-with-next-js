@@ -7,13 +7,17 @@ export const sendEmail = async ({ email, emailType, userId }: any) => {
     const token = uuid();
     if (emailType === "Varify") {
       await User.findByIdAndUpdate(userId, {
-        varifyToken: token,
-        varifyTokenExpiry: Date.now() + 36000000,
+        $set: {
+          varifyToken: token,
+          varifyTokenExpiry: Date.now() + 36000000,
+        },
       });
     } else if (emailType === "Reset") {
       await User.findByIdAndUpdate(userId, {
-        forgetPasswordToken: token,
-        forgetPasswordTokenExpiry: Date.now() + 36000000,
+        $set: {
+          forgetPasswordToken: token,
+          forgetPasswordTokenExpiry: Date.now() + 36000000,
+        },
       });
     }
 

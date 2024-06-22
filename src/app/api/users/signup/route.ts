@@ -34,15 +34,13 @@ export const POST = async (request: NextRequest) => {
 
     await sendEmail({ email, emailType: "Varify", userId: newUser._id });
 
-    const newUserData = await User.findById(newUser._id).select(
-      "password forgetPasswordTokenExpiry forgetPasswordToken"
-    );
+    
 
     return NextResponse.json(
       {
         message: "User registerd successfully",
         success: true,
-        newUserData,
+        newUser,
       },
       { status: 200 }
     );

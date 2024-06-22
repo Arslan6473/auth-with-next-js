@@ -28,6 +28,7 @@ export const POST = async (request: NextRequest) => {
       {
         message: "Email varified successfully",
         success: true,
+
       },
       { status: 200 }
     );

@@ -41,6 +41,7 @@ export const POST = async (request: NextRequest) => {
     const response = NextResponse.json({
       message: "User signin successfully",
       success: true,
+      user
     });
 
     const options = {
