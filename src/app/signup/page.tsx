@@ -27,7 +27,7 @@ function SignupPage() {
     try {
       setLoading(true);
       const response = await axios.post("/api/users/signup", user);
-      toast("User signup successfully!");
+      toast.success("User signup successfully!");
       if (response.data) router.push("/signin");
       setLoading(false);
     } catch (error: any) {

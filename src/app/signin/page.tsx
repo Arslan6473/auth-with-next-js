@@ -27,8 +27,8 @@ function SigninPage() {
     try {
       setLoading(true);
       const response = await axios.post("/api/users/signin", user);
-      toast("User signin successfully!");
-      if (response.data) router.push("/");
+      toast.success("User signin successfully!");
+      if (response.data) router.push("/myprofile");
       setLoading(false);
     } catch (error: any) {
       toast.error(error.message);

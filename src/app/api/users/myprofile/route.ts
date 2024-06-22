@@ -5,7 +5,7 @@ import { getValuesFromToken } from "@/utils/varifyJwt";
 
 connectDB();
 
-export const POST = async (request: NextRequest) => {
+export const GET= async (request: NextRequest) => {
   try {
     const userId = await getValuesFromToken(request);
 
