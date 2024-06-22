@@ -55,7 +55,7 @@ function VerifyEmailPage() {
           </div>
         )}
 
-        <Link href={"/myprofile"}>Back to My Profile!</Link>
+        <Link href={"/myprofile"}>Back to login!</Link>
       </div>
     </>
   );

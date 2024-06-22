@@ -12,7 +12,6 @@ function resetPasswordPage() {
     try {
       setLoading(true);
       const response = await axios.post("/api/users/resetpassword", { email });
-      console.log(response.data.user);
       setUser(response.data.user);
       setLoading(false);
     } catch (error: any) {
