@@ -91,7 +91,7 @@ function SignupPage() {
             Sign Up
           </button>
         )}
-        <Link href={"/signin"}>Already have an account?</Link>
+        <Link href={"/"}>Already have an account?</Link>
       </div>
     </>
   );

@@ -1,7 +1,7 @@
 import User from "@/models/user.model";
 import { connectDB } from "@/db/dbConfig";
 import { NextResponse, NextRequest } from "next/server";
-import { sendEmail } from "@/utils/mailer";
+import bcrypt from "bcryptjs";
 
 connectDB();
 
@@ -9,15 +9,12 @@ export const POST = async (request: NextRequest) => {
   try {
     const reqBody = await request.json();
 
-    const { email } = reqBody;
+    const { password, token } = reqBody;
 
-    if (!email )
-      return NextResponse.json(
-        { error: "email is required" },
-        { status: 400 }
-      );
-
-    const user = await User.findOne({ email });
+    const user = await User.findOne({
+      forgetPasswordToken: token,
+      forgetPasswordTokenExpiry: { $gt: Date.now() },
+    });
 
     if (!user)
       return NextResponse.json(
@@ -25,17 +22,20 @@ export const POST = async (request: NextRequest) => {
         { status: 400 }
       );
 
-    await sendEmail({ email, emailType: "Reset", userId: user._id });
+    const salt = await bcrypt.genSalt(10);
+    const hashPassword = await bcrypt.hash(password, salt);
 
-    
+    user.password = hashPassword;
+
+    await user.save();
+
     return NextResponse.json(
-        {
-          message: "User verified successfully",
-          success: true,
-          user
-        },
-        { status: 200 }
-      );
+      {
+        message: "password updated successfully",
+        success: true,
+      },
+      { status: 200 }
+    );
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }

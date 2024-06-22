@@ -28,10 +28,10 @@ function SigninPage() {
       setLoading(true);
       const response = await axios.post("/api/users/signin", user);
       toast.success("User signin successfully!");
-      if (response.data) router.push("/myprofile");
+      if (response.data) router.push("/");
       setLoading(false);
     } catch (error: any) {
-      toast.error(error.message);
+      toast(error.message);
     } finally {
       setLoading(false);
     }
@@ -78,6 +78,7 @@ function SigninPage() {
             Sign In
           </button>
         )}
+        <Link href={"/resetpassword"}>Forget password</Link>
         <Link href={"/signup"}>Don't have an account?</Link>
       </div>
     </>

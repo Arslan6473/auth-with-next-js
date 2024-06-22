@@ -33,8 +33,8 @@ export const sendEmail = async ({ email, emailType, userId }: any) => {
     const varifyEmail = `<p>Click <a href="${process.env.DOMAIN}/verifyemail?token=${token}">here</a> to Verify your email
             or copy and paste the link below in your browser. <br> ${process.env.DOMAIN}/verifyemail?token=${token}
             </p>`;
-    const resetPassword = `<p>Click <a href="${process.env.DOMAIN}/resetpassword?token=${token}">here</a> to Reset your password
-            or copy and paste the link below in your browser. <br> ${process.env.DOMAIN}/resetpassword?token=${token}
+    const resetPassword = `<p>Click <a href="${process.env.DOMAIN}/updatepassword?token=${token}">here</a> to Reset your password
+            or copy and paste the link below in your browser. <br> ${process.env.DOMAIN}/updatepassword?token=${token}
             </p>`;
 
     const mailOptions = {
